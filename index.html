@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T2R Initiative</title>
+  <style>
+    :root {
+  --bg-light: linear-gradient(135deg, #f0f4ff, #dbeafe);
+  --bg-dark: linear-gradient(135deg, #1e1e2f, #2c2c3f);
+  --text-light: #1a1a1a;
+  --text-dark: #f5f5f5;
+  --accent: #7f5af0;
+  --nav-bg: rgba(255, 255, 255, 0.1);
+  --nav-link: #7f5af0;
+  --nav-hover: #00c6ff;
+  --underline: 2px solid var(--nav-hover);
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  transition: background 0.5s, color 0.5s;
+  background: var(--bg-light);
+  color: var(--text-light);
+  scroll-behavior: smooth;
+}
+
+body.dark {
+  background: var(--bg-dark);
+  color: var(--text-dark);
+  --nav-bg: rgba(30, 30, 47, 0.1);
+  --nav-link: #00c6ff;
+  --nav-hover: #7f5af0;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1.2rem;
+  gap: 0.5rem;
+}
+
+.logo-img {
+  width: 32px;
+  height: auto;
+}
+
+/* Show/hide based on theme */
+.light-logo {
+  display: inline-block;
+}
+
+.dark-logo {
+  display: none;
+}
+
+body.dark .light-logo {
+  display: none;
+}
+
+body.dark .dark-logo {
+  display: inline-block;
+}
+.hamburger {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--nav-link);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-links a {
+  position: relative;
+  text-decoration: none;
+  color: var(--nav-link);
+  font-weight: bold;
+  padding: 0.5rem 0.8rem;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background-color: var(--nav-hover);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
+.nav-links a.active::after {
+  transform: scaleX(0.5);
+}
+
+#toggle-theme {
+  background: var(--nav-hover);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: 1rem;
+  font-weight: bold;
+}
+
+.carousel {
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.carousel img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel img.active {
+  opacity: 1;
+}
+
+header, section, footer {
+  padding: 4rem 2rem;
+  /*max-width: 1000px;*/
+  margin: auto;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+section.visible, header.visible, footer.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(to right, #7f5af0, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+h2 {
+  font-size: 2rem;
+  background: linear-gradient(to right, #7f5af0, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /*text-align: center;*/
+  margin-bottom: 1rem;
+}
+button {
+  background: #7f5af0;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: var(--nav-bg);
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 1rem;
+    border-radius: 8px;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  #toggle-theme {
+    margin-top: 0.5rem;
+    margin-left: 0;
+    width: 100%;
+  }
+}
+.animated-section .section-heading,
+.animated-section .section-content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animated-section.visible .section-heading {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.2s;
+}
+
+.animated-section.visible .section-content {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.6s;
+}
+section:nth-of-type(even) {
+  background-color: rgba(249, 249, 255, 0.8); /* light lavender with 80% opacity */
+}
+
+section:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.8); /* white with 80% opacity */
+}
+
+body.dark section:nth-of-type(even) {
+  background-color: rgba(44, 44, 63, 0.8); /* dark lavender with 80% opacity */
+}
+
+body.dark section:nth-of-type(odd) {
+  background-color: rgba(30, 30, 47, 0.8); /* darker tone with 80% opacity */
+}
+
+body.dark section {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* subtle divider line */
+}
+
+section {
+  width: 100%;
+  padding: 4rem 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.section-inner {
+  max-width: 1000px;
+  margin: auto;
+  padding: 0 2rem;
+}
+
+  </style>
+</head>
+<body>
+  <!-- <button id="toggle-theme">🌙</button> -->
+
+<nav>
+  <div class="nav-container">
+    <div class="logo">
+    <img src="images/logo/T2R_logo.png" alt="T2R Logo" class="logo-img light-logo" />
+    <img src="images/logo/T2R_logo_dark.png" alt="T2R Logo Dark" class="logo-img dark-logo" />
+    T2R
+    </div>
+
+
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="#problem">Problem</a>
+      <a href="#solution">Solution</a>
+      <a href="#structure">Structure</a>
+      <a href="#mentors">Mentors</a>
+      <a href="#stories">Stories</a>
+      <a href="#join">Join</a>
+      <button id="toggle-theme">🌙</button>
+    </div>
+  </div>
+</nav>
+
+  <div class="carousel">
+    <img src="images/slideshow/img1.png" class="active" />
+    <img src="images/slideshow/img2.png" />
+    <img src="images/slideshow/img1.png" />
+  </div>
+
+<header>
+  <div class="section-inner">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h1>T2R: Theory to Reality</h1>
+    </div>
+    <p>Empowering engineers through global collaboration.</p>
+    <!-- <button>Learn More</button> -->
+  </div>
+</header>
+
+
+<section id="problem" class="animated-section">
+  <div class="section-inner">
+
+    <h2 class="section-heading">The Problem</h2>
+
+    <div class="section-content">
+      <p>Students often feel lost after graduation. Placeholder line.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="solution" class="animated-section">
+  <div class="section-inner">
+    <h2 class="section-heading">Solution</h2>
+    <div class="section-content">
+      <p>T2R provides a platform for students to connect with industry experts. Placeholder line.</p>
+    </div>
+  </div>
+</section>
+
+<section id="structure" class="animated-section">
+  <div class="section-inner">
+    <h2 class="section-heading">Program Structure</h2>
+    <div class="section-content">
+      <p>Interactive sessions, expert-led guidance. Placeholder line.</p>
+    </div>
+  </div>
+</section>
+
+<section id="mentors" class="animated-section">
+  <div class="section-inner">
+    <h2 class="section-heading">Mentor Voices</h2>
+    <div class="section-content">
+      <p>Hear from professionals across industries. Placeholder line.</p>
+    </div>
+  </div>
+</section>
+
+
+<section id="stories" class="animated-section">
+  <div class="section-inner">
+    <h2 class="section-heading">Student Stories</h2>
+    <div class="section-content">
+      <p>Real transformation through T2R. Placeholder line.</p>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="animated-section">
+  <div class="section-inner">
+    <h2 class="section-heading">Join Us</h2>
+    <div class="section-content">
+      <p>Be part of the movement. Placeholder line.</p>
+      <button>Sign Up</button>
+    </div>
+  </div>
+</section>
+
+  <footer>
+    <p>© 2025 T2R Initiative. All rights reserved.</p>
+  </footer>
+
+  <script>
+
+
+  function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+
+    navLinks.classList.toggle('show');
+    hamburger.textContent = navLinks.classList.contains('show') ? '✖' : '☰';
+  }
+
+  const toggle = document.getElementById('toggle-theme');
+  toggle.onclick = () => {
+    document.body.classList.toggle('dark');
+    toggle.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
+  };
+
+  const sections = document.querySelectorAll('section, header, footer');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+  sections.forEach(sec => observer.observe(sec));
+  
+  const images = document.querySelectorAll('.carousel img');
+  let index = 0;
+  setInterval(() => {
+    images[index].classList.remove('active');
+    index = (index + 1) % images.length;
+    images[index].classList.add('active');
+  }, 4000);
+
+
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - 100;
+    if (pageYOffset >= sectionTop) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${current}`) {
+      link.classList.add('active');
+    }
+  });
+});
+
+  </script>
+</body>
+</html>
