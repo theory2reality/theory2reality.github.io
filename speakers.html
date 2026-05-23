@@ -35,6 +35,16 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="css/style.css" />
 
+  <link rel="stylesheet" href="css/map_.css">
+  <!-- marker cluster -->
+  <link rel="stylesheet" href="css/cdn/leaflet.css" />
+  <link rel="stylesheet" href="css/cdn/MarkerCluster.css" />
+  <link rel="stylesheet" href="css/cdn/MarkerCluster.Default.css" />
+  <link rel="stylesheet" href="css/cdn/Control.FullScreen.css" />
+  <link rel="stylesheet" href="css/cdn/Control.Geocoder.css" />
+
+
+  <script src="js/cdn/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -72,8 +82,14 @@
 
 
       <h5 class="section-title">
-          Our Network Map 
+          Our Network 
         </h5>
+
+
+      <div class="row">
+        <div id="map"></div>
+      </div> 
+
 
         <p class="section-copy">
 
@@ -96,10 +112,10 @@
         <!-- CARD -->
         <div class="col-md-6 col-xl-4">
 
-          <div class="card-custom speaker-card h-100">
+          <div class="card-custom speaker-card h-70">
 
             <img
-              src="assets/Suresh.png"
+              src="assets/Narayana.jpg"
               alt="Pradeep Hegde"
               class="speaker-image"
             />
@@ -129,7 +145,7 @@
         <!-- CARD -->
         <div class="col-md-6 col-xl-4">
 
-          <div class="card-custom speaker-card h-100">
+          <div class="card-custom speaker-card h-70">
 
             <img
               src="assets/pradeep.png"
@@ -161,10 +177,10 @@
         <!-- CARD -->
         <div class="col-md-6 col-xl-4">
 
-          <div class="card-custom speaker-card h-100">
+          <div class="card-custom speaker-card h-70">
 
             <img
-              src="assets/Suresh.png"
+              src="assets/Narayana.jpg"
               alt="Speaker 3"
               class="speaker-image"
             />
@@ -240,7 +256,20 @@
   <script src="js/include.js"></script>
 
   <!-- Main JS -->
-  <script src="js/script.js"></script>
+  
+  
+
+<!-- 1. Core Leaflet Library FIRST -->
+<script src="js/cdn/leaflet.js"></script>
+
+<!-- 2. Leaflet Plugins NEXT -->
+<script src="js/cdn/Control.Geocoder.js"></script>
+<script src="js/cdn/Control.FullScreen.js"></script>
+<script src="js/cdn/leaflet.markercluster.js"></script>
+
+<!-- 3. Your Custom Scripts LAST -->
+<script src="js/network_map.js"></script>
+<script src="js/script.js"></script>
 
 </body>
 </html>
